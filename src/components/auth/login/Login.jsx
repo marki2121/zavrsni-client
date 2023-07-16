@@ -8,7 +8,7 @@ const Login = () => {
 
     return (
         <>
-            <Grid direction="column" justifyContent="center" justifyItems="center" spacing={2} margin={2}>
+            <Grid direction="column" justifyContent="center" justifyItems="center" spacing={2} marginX={5}>
                 <Grid item margin={2}>
                     <TextField label="username"/>
                 </Grid>
