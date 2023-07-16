@@ -20,7 +20,7 @@ const Signup = () => {
                 </Grid>
                 <Grid item margin={2} textAlign="center">
                     <Button variant="contained">
-                        <AppRegistrationRounded /> Register
+                        Register  <AppRegistrationRounded />
                     </Button>
                 </Grid>
                 <Grid item margine={2}>

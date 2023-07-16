@@ -17,7 +17,7 @@ const Login = () => {
                 </Grid>
                 <Grid item margin={2} textAlign="center">
                     <Button variant="contained">
-                        <LoginRounded /> Login
+                        Login  <LoginRounded />
                     </Button>
                 </Grid>
                 <Grid item margine={2}>
