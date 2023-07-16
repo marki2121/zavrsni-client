@@ -1,19 +1,19 @@
 import React from 'react'
-import {Box, Container, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {Outlet} from "react-router-dom";
 
 const Auth = () => {
     return (
         <>
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-                <Container maxWidth="xs">
+                <Box maxWidth="xs" borderRadius="30px" border="1px solid black" paddingY={5}>
                     <Typography variant="h5" align="center" gutterBottom>
-                        Authntication
+                        Authentication
                     </Typography>
                     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                         <Outlet />
                     </Box>
-                </Container>
+                </Box>
             </Box>
         </>
     )
