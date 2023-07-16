@@ -7,16 +7,41 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter, RouterProvider,} from "react-router-dom";
+import Error from "./components/error/Error";
+import Login from "./components/auth/login/Login";
+import Auth from "./components/auth/Auth";
+import Default from "./components/auth/Default";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />
+        element: <App />,
+        errorElement: <Error />
     },
+    {
+        path: "/auth",
+        element: <Auth />,
+        errorElement: <Error />,
+
+        children: [
+            {
+                path: "/auth/",
+                element: <Default />,
+                errorElement: <Error />
+            },
+            {
+                path: "/auth/login",
+                element: <Login />,
+                errorElement: <Error />
+            },
+            {
+                path: "/auth/register",
+                element: <Login />,
+                errorElement: <Error />
+            }
+        ]
+    }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
