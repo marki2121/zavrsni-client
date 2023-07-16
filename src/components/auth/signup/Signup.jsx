@@ -1,9 +1,9 @@
 import React from 'react'
-import {Button, Divider, Grid, TextField, Typography} from "@mui/material";
-import {LoginRounded} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
+import {Button, Divider, Grid, TextField, Typography} from "@mui/material";
+import {AppRegistrationRounded} from "@mui/icons-material";
 
-const Login = () => {
+const Signup = () => {
     const navigate = useNavigate();
 
     return (
@@ -15,18 +15,21 @@ const Login = () => {
                 <Grid item margin={2}>
                     <TextField label="password"/>
                 </Grid>
+                <Grid item margin={2}>
+                    <TextField label="confirm password"/>
+                </Grid>
                 <Grid item margin={2} textAlign="center">
                     <Button variant="contained">
-                        <LoginRounded /> Login
+                        <AppRegistrationRounded /> Register
                     </Button>
                 </Grid>
                 <Grid item margine={2}>
                     <Divider  />
                 </Grid>
                 <Grid item margine={2} paddingTop={2} textAlign="center">
-                    <Button onClick={() => {navigate("/auth/register/")}}>
+                    <Button onClick={() => {navigate("/auth/login/")}}>
                         <Typography>
-                            I don't have an account
+                            I already have an account
                         </Typography>
                     </Button>
                 </Grid>
@@ -34,4 +37,4 @@ const Login = () => {
         </>
     )
 }
-export default Login;
+export default Signup;
