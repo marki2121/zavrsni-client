@@ -13,33 +13,36 @@ import Login from "./components/auth/login/Login";
 import Auth from "./components/auth/Auth";
 import Default from "./components/auth/Default";
 import Signup from "./components/auth/signup/Signup";
+import {DevSupport} from "@react-buddy/ide-toolbox";
+import {ComponentPreviews, useInitial} from "./dev";
+import {CookiesProvider} from "react-cookie";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
-        errorElement: <Error />
+        element: <App/>,
+        errorElement: <Error/>
     },
     {
         path: "/auth",
-        element: <Auth />,
-        errorElement: <Error />,
+        element: <Auth/>,
+        errorElement: <Error/>,
 
         children: [
             {
                 path: "/auth/",
-                element: <Default />,
-                errorElement: <Error />
+                element: <Default/>,
+                errorElement: <Error/>
             },
             {
                 path: "/auth/login",
-                element: <Login />,
-                errorElement: <Error />
+                element: <Login/>,
+                errorElement: <Error/>
             },
             {
                 path: "/auth/register",
-                element: <Signup />,
-                errorElement: <Error />
+                element: <Signup/>,
+                errorElement: <Error/>
             }
         ]
     }
@@ -47,7 +50,12 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <CookiesProvider>
+            <DevSupport ComponentPreviews={ComponentPreviews}
+                        useInitialHook={useInitial}>
+                <RouterProvider router={router}/>
+            </DevSupport>
+        </CookiesProvider>
+    </React.StrictMode>
 );

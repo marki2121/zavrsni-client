@@ -8,6 +8,12 @@ const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [cookies, setCookies] = useState(['access_token']);
+
+    const callLogin = async () => {
+        setCookies(await login(username, password));
+        console.log(cookies);
+    }
 
     return (
         <>
@@ -19,7 +25,7 @@ const Login = () => {
                     <TextField label="password" onChange={(e) => {setPassword(e.target.value)}}/>
                 </Grid>
                 <Grid item margin={2} textAlign="center">
-                    <Button variant="contained" onClick={() => {login(username, password).then(r => console.log(r))}}>
+                    <Button variant="contained" onClick={() => {callLogin()}}>
                         Login  <LoginRounded />
                     </Button>
                 </Grid>
