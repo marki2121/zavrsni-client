@@ -3,16 +3,27 @@ import {Button, Divider, Grid, TextField, Typography} from "@mui/material";
 import {LoginRounded} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {login} from "../../../functions/auth/Auth";
+import {useCookies} from "react-cookie";
 
 const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [cookies, setCookies] = useState(['access_token']);
+    const [cookies, setCookies] = useCookies(['access_token']);
 
     const callLogin = async () => {
-        setCookies(await login(username, password));
-        console.log(cookies);
+        const response = await login(username, password);
+
+        if(response.status === 200) {
+            setCookies(
+                "access_token",
+                response.data,
+                []);
+
+            navigate("/")
+        } else {
+            console.log(response.status);
+        }
     }
 
     return (

@@ -16,12 +16,20 @@ import Signup from "./components/auth/signup/Signup";
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
 import {CookiesProvider} from "react-cookie";
+import {ProtectedRoute} from "./components/auth/ProtectedRout";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
-        errorElement: <Error/>
+        element: <ProtectedRoute/>,
+        errorElement: <Error/>,
+        children: [
+            {
+                path: "/",
+                element: <App/>,
+                errorElement: <Error/>
+            }
+        ]
     },
     {
         path: "/auth",
