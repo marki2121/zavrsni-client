@@ -13,13 +13,16 @@ import {
     Typography
 } from "@mui/material";
 import {Adb, MenuBook} from "@mui/icons-material";
+import {useCookies} from "react-cookie";
+import {Link, useNavigate} from "react-router-dom";
 
 const Header = () => {
     const pages = ["Home", "About", "Contact", "Login", "Register"];
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const navigate  = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent) => {
         setAnchorElNav(event.currentTarget);
@@ -34,6 +37,11 @@ const Header = () => {
     };
 
     const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+    const handleCloseUserMenuUrl = (url) => {
+        navigate(`/${url.toLowerCase}`);
         setAnchorElUser(null);
     };
 
@@ -149,11 +157,12 @@ const Header = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem component={Link} to="/profile">
+                                <Typography textAlign="center">Profile</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => {removeCookie('access_token', null)}}>
+                                <Typography textAlign="center">Logout</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

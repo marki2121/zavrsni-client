@@ -33,7 +33,7 @@ const Login = () => {
                     <TextField label="username" onChange={(e) => {setUsername(e.target.value)}}/>
                 </Grid>
                 <Grid item margin={2}>
-                    <TextField label="password" onChange={(e) => {setPassword(e.target.value)}}/>
+                    <TextField type="password" label="password" onChange={(e) => {setPassword(e.target.value)}}/>
                 </Grid>
                 <Grid item margin={2} textAlign="center">
                     <Button variant="contained" onClick={() => {callLogin()}}>
