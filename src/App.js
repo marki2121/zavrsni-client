@@ -10,15 +10,13 @@ const App = () => {
     const [ user, setUser ] = useState(null);
     const [ cookie ] = useCookies('access_token');
 
-    useEffect(() => {
+    useEffect( () => {
         if (cookie.access_token) {
-            const response = getSelf(cookie.access_token);
-
-            if(response.status === 200) {
-                setUser(response.data);
-            } else {
-                console.log(response);
-            }
+            getSelf(cookie.access_token).then((r) => {
+                if (r.status === 200) {
+                    setUser(r.data);
+                }
+            }).catch((e) => console.log(e));
         }
     }, []);
 

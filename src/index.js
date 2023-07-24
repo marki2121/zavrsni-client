@@ -17,6 +17,8 @@ import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
 import {CookiesProvider} from "react-cookie";
 import {ProtectedRoute} from "./components/auth/ProtectedRout";
+import {Profile} from "./components/profile/Profile";
+import {UpdateProfile} from "./components/profile/UpdateProfile";
 
 const router = createBrowserRouter([
     {
@@ -27,7 +29,19 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <App/>,
-                errorElement: <Error/>
+                errorElement: <Error/>,
+                children: [
+                    {
+                        path: "/profile",
+                        element: <Profile/>,
+                        errorElement: <Error/>
+                    },
+                    {
+                        path: "/profile/update",
+                        element: <UpdateProfile/>,
+                        errorElement: <Error/>,
+                    }
+                ]
             }
         ]
     },

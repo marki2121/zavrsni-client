@@ -1,15 +1,18 @@
 import React, {useContext} from 'react'
-import {Avatar, Box, Button, Card, Typography} from "@mui/material";
+import {Avatar, Box, Button, Card, TextField, Typography} from "@mui/material";
 import {UserContext} from "../../App";
-import {useNavigate} from "react-router-dom";
 
-export const Profile = () => {
+export const UpdateProfile = () => {
     const { user, setUser } = useContext(UserContext);
-    const navigate = useNavigate();
-
-    const handleUpdate = () => {
-        navigate("/profile/update");
-    }
+    const [name, setName] = React.useState('');
+    const [surname, setSurname] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [city, setCity] = React.useState('');
+    const [zipCode, setZipCode] = React.useState('');
+    const [country, setCountry] = React.useState('');
+    const [phone, setPhone] = React.useState('');
+    const [aboutMe, setAboutMe] = React.useState('');
 
     return (
         <>
@@ -20,46 +23,40 @@ export const Profile = () => {
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: 4, ml: {xs: 2}, mx: 'auto'}}>
                         <Typography variant="h6" component="h6">
-                            Username: {user.username}
+                            Name: <TextField label="name" onChange={(e) => {setName(e.target.value)}}/>
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            Name: {user.firstName ? user.firstName : 'Not set'}
+                            Surname: <TextField label="surname" onChange={(e) => {setSurname(e.target.value)}}/>
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            Surname: {user.lastName ? user.lastName : 'Not set'}
+                            Email: <TextField label="email" onChange={(e) => {setEmail(e.target.value)}}/>
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            Email: {user.email ? user.email : 'Not set'}
-                        </Typography>
-                        <Typography variant="h6" component="h6">
-                            Address: {user.address ? user.address : 'Not set'}
+                            Address: <TextField label="address" onChange={(e) => {setAddress(e.target.value)}}/>
                         </Typography>
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: {md: 4}, ml: {xs: 2}, mx: 'auto'}}>
                         <Typography variant="h6" component="h6">
-                            City: {user.city ? user.city : 'Not set'}
+                            City: <TextField label="city" onChange={(e) => {setCity(e.target.value)}}/>
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            Zip code: {user.zipCode ? user.zipCode : 'Not set'}
+                            Zip code: <TextField label="zip code" onChange={(e) => {setZipCode(e.target.value)}}/>
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            Country: {user.country ? user.country : 'Not set'}
+                            Country: <TextField label="country" onChange={(e) => {setCountry(e.target.value)}}/>
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            Phone: {user.phone ? user.phone : 'Not set'}
-                        </Typography>
-                        <Typography variant="h6" component="h6">
-                            Role: {user.role}
+                            Phone: <TextField label="phone" onChange={(e) => {setPhone(e.target.value)}}/>
                         </Typography>
                     </Box>
                 </Box>
                 <Box>
                     <Typography variant="h6" component="h6" sx={{m: 2}}>
-                        About me: {user.aboutMe ? user.aboutMe : 'Not set'}
+                        About me: <TextField label="aboutMe" onChange={(e) => {setAboutMe(e.target.value)}}/>
                     </Typography>
                 </Box>
                 <Box>
-                    <Button variant="contained" sx={{m: 'auto', display: 'flex', mb: 2}} onClick={() => {handleUpdate()}}>
+                    <Button variant="contained" sx={{m: 'auto', display: 'flex', mb: 2}}>
                         Update
                     </Button>
                 </Box>
