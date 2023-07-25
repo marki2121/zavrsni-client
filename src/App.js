@@ -3,6 +3,7 @@ import {Outlet} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {getSelf} from "./functions/user/User";
 import Header from "./components/header/Header";
+import {Box, CircularProgress} from "@mui/material";
 
 export const UserContext = React.createContext(null);
 
@@ -29,7 +30,9 @@ const App = () => {
                     <Outlet />
                 </>
                 :
-                <div>loading</div>
+                <Box justifyContent="center" justifyItems="center" sx={{p: 2}}>
+                    <CircularProgress />
+                </Box>
             }
         </UserContext.Provider>
     )

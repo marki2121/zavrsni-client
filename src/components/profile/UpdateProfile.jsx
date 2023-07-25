@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {Avatar, Box, Button, Card, TextField, Typography} from "@mui/material";
+import {Avatar, Box, Button, Card, TextField} from "@mui/material";
 import {UserContext} from "../../App";
 import {useCookies} from "react-cookie";
 import {getSelf, updateSelf} from "../../functions/user/User";
@@ -50,38 +50,20 @@ export const UpdateProfile = () => {
                         <Avatar sx={{ width: 136, height: 136 }} src="/static/images/avatar/2.jpg" alt={user.firstName}/>
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: 4, ml: {xs: 2}, mx: 'auto'}}>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Name:  <TextField label="name" onChange={(e) => {setName(e.target.value)}}/>
-                        </Typography>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Surname: <TextField label="surname" onChange={(e) => {setSurname(e.target.value)}}/>
-                        </Typography>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Email: <TextField label="email" onChange={(e) => {setEmail(e.target.value)}}/>
-                        </Typography>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Address: <TextField label="address" onChange={(e) => {setAddress(e.target.value)}}/>
-                        </Typography>
+                        <TextField sx={{m: 1}} label="name" onChange={(e) => {setName(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="surname" onChange={(e) => {setSurname(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="address" onChange={(e) => {setAddress(e.target.value)}}/>
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: {md: 4}, ml: {xs: 2}, mx: 'auto'}}>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            City: <TextField label="city" onChange={(e) => {setCity(e.target.value)}}/>
-                        </Typography>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Zip code: <TextField label="zip code" onChange={(e) => {setZipCode(e.target.value)}}/>
-                        </Typography>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Country: <TextField label="country" onChange={(e) => {setCountry(e.target.value)}}/>
-                        </Typography>
-                        <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
-                            Phone: <TextField label="phone" onChange={(e) => {setPhone(e.target.value)}}/>
-                        </Typography>
+                        <TextField sx={{m: 1}} label="city" onChange={(e) => {setCity(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="zip code" onChange={(e) => {setZipCode(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="country" onChange={(e) => {setCountry(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="phone" onChange={(e) => {setPhone(e.target.value)}}/>
                     </Box>
                 </Box>
                 <Box>
-                    <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", m: 2}}>
-                        About me: <TextField label="aboutMe" onChange={(e) => {setAboutMe(e.target.value)}}/>
-                    </Typography>
+                    <TextField sx={{m: 1}} label="aboutMe" onChange={(e) => {setAboutMe(e.target.value)}}/>
                 </Box>
                 <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}}}>
                     <Button variant="contained" sx={{m: 'auto', display: 'flex', mb: 2}} onClick={() => {callUpdate()}}>

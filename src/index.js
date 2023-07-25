@@ -20,6 +20,7 @@ import {ProtectedRoute} from "./components/auth/ProtectedRout";
 import {Profile} from "./components/profile/Profile";
 import {UpdateProfile} from "./components/profile/UpdateProfile";
 import TeacherPortal from "./components/teacher/portal/TeacherPortal";
+import AddSubject from "./components/teacher/portal/AddSubject";
 
 const router = createBrowserRouter([
     {
@@ -43,8 +44,13 @@ const router = createBrowserRouter([
                         errorElement: <Error/>,
                     },
                     {
-                        path: "teacher",
+                        path: "/teacher",
                         element: <TeacherPortal />,
+                        errorElement: <Error/>
+                    },
+                    {
+                        path: "/teacher/subject/add",
+                        element: <AddSubject />,
                         errorElement: <Error/>
                     }
                 ]
