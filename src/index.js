@@ -19,6 +19,7 @@ import {CookiesProvider} from "react-cookie";
 import {ProtectedRoute} from "./components/auth/ProtectedRout";
 import {Profile} from "./components/profile/Profile";
 import {UpdateProfile} from "./components/profile/UpdateProfile";
+import TeacherPortal from "./components/teacher/portal/TeacherPortal";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
                         path: "/profile/update",
                         element: <UpdateProfile/>,
                         errorElement: <Error/>,
+                    },
+                    {
+                        path: "teacher",
+                        element: <TeacherPortal />,
+                        errorElement: <Error/>
                     }
                 ]
             }

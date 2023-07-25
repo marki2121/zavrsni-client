@@ -55,7 +55,7 @@ export const Profile = () => {
                 </Box>
                 <Box>
                     <Typography variant="h6" component="h6" sx={{m: 2}}>
-                        About me: {user.aboutMe ? user.aboutMe : 'Not set'}
+                        About me: {user.about ? user.about : 'Not set'}
                     </Typography>
                 </Box>
                 <Box>

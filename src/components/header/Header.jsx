@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {
     AppBar,
     Avatar,
@@ -15,6 +15,7 @@ import {
 import {Adb, MenuBook} from "@mui/icons-material";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate} from "react-router-dom";
+import {UserContext} from "../../App";
 
 const Header = () => {
     const pages = ["Home", "About", "Contact", "Login", "Register"];
@@ -22,6 +23,7 @@ const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const { user, setUser } = useContext(UserContext);
     const navigate  = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent) => {
@@ -37,11 +39,6 @@ const Header = () => {
     };
 
     const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
-    const handleCloseUserMenuUrl = (url) => {
-        navigate(`/${url.toLowerCase}`);
         setAnchorElUser(null);
     };
 
@@ -97,11 +94,21 @@ const Header = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {user.role !== null && user.role === "TEACHER" || user.role === "ADMIN" ?
+                                <MenuItem onClick={handleCloseNavMenu} component={Link} to="/teacher">
+                                    <Typography textAlign="center">Teacher</Typography>
                                 </MenuItem>
-                            ))}
+                                :
+                                <MenuItem />
+                            }
+                            {
+                                user.role !== null && user.role === "ADMIN" ?
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">Admin</Typography>
+                                    </MenuItem>
+                                    :
+                                    <MenuItem/>
+                            }
                         </Menu>
                     </Box>
                     <Adb sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -124,21 +131,34 @@ const Header = () => {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {user.role !== null && user.role === "TEACHER" || user.role === "ADMIN" ?
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            component={Link}
+                            to="/teacher"
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Teacher
+                        </Button>
+                            :
+                            <></>
+                        }
+                        {user.role !== null && user.role === "ADMIN" ?
                             <Button
-                                key={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                Admin
                             </Button>
-                        ))}
+                            :
+                            <></>
+                        }
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={user.firstName} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu

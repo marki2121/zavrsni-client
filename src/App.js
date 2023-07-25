@@ -15,6 +15,7 @@ const App = () => {
             getSelf(cookie.access_token).then((r) => {
                 if (r.status === 200) {
                     setUser(r.data);
+                    console.log(r.data);
                 }
             }).catch((e) => console.log(e));
         }
@@ -22,8 +23,14 @@ const App = () => {
 
     return (
         <UserContext.Provider value={{ user: user, setUser: setUser }}>
-            <Header />
-            <Outlet />
+            {user !== null ?
+                <>
+                    <Header />
+                    <Outlet />
+                </>
+                :
+                <div>loading</div>
+            }
         </UserContext.Provider>
     )
 }

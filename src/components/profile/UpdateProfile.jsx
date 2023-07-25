@@ -18,6 +18,7 @@ export const UpdateProfile = () => {
     const [country, setCountry] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [aboutMe, setAboutMe] = React.useState('');
+    const [image, setImage] = React.useState(null);
 
     const callUpdate = async () => {
         const response = await updateSelf(cookie.access_token, name, surname, email, phone, address, city, zipCode, country, aboutMe);
@@ -37,12 +38,16 @@ export const UpdateProfile = () => {
         }
     };
 
+    const uploadImage = async (e) => {
+        setImage(e.target.files[0]);
+    }
+
     return (
         <>
             <Card sx={{my: 1.5}}>
                 <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'row'}}}>
                     <Box sx={{height: {md: 'max'}, m: 4}}>
-                        <Avatar sx={{ width: 136, height: 136 }} src="/static/images/avatar/2.jpg" alt="Avatar"/>
+                        <Avatar sx={{ width: 136, height: 136 }} src="/static/images/avatar/2.jpg" alt={user.firstName}/>
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: 4, ml: {xs: 2}, mx: 'auto'}}>
                         <Typography variant="h6" component="h6" sx={{display: "flex", alignItems: "center", my: 1}}>
@@ -78,9 +83,12 @@ export const UpdateProfile = () => {
                         About me: <TextField label="aboutMe" onChange={(e) => {setAboutMe(e.target.value)}}/>
                     </Typography>
                 </Box>
-                <Box>
+                <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}}}>
                     <Button variant="contained" sx={{m: 'auto', display: 'flex', mb: 2}} onClick={() => {callUpdate()}}>
                         Update
+                    </Button>
+                    <Button sx={{m: 'auto', display: 'flex', mb: 2}} variant="contained" component="label">
+                        Upload Image <input onChange={(e) => {uploadImage(e)}} type="file" hidden/>
                     </Button>
                 </Box>
             </Card>
