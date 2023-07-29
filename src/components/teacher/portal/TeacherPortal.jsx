@@ -18,10 +18,16 @@ const TeacherPortal = () => {
         if (cookie.access_token && loading) {
             getAllSubjects(cookie.access_token).then((r) => {
                     {
-                        setSubjects(r);
-                        console.log(r);
-                        setLoading(false);
-            }}).catch((e) => console.log(e));
+                        if(r.status !== 200) {
+                            setSubjects(r);
+                            console.log(subjects);
+                            setLoading(false);
+                        } else {
+                            setSubjects(null);
+                        }
+            }}).catch((e) => {
+                console.log(e);
+            });
         }
     }, []);
 
@@ -34,7 +40,7 @@ const TeacherPortal = () => {
                             Teacher Portal
                         </Typography>
                     </Box>
-                    { subjects !== null ?
+                    { subjects !== [] ?
                         <>
                             <Grid container spacing={3} columnSpacing={{ xs: 1, md: 3}} rows={{ xs: 1, sm: 3, md: 4 }} alignItems="center" justifyContent="center" sx={{p: 2}}>
                                 {subjects.map((subject) => (

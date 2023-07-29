@@ -34,3 +34,8 @@ export const updateSelf = async (token, firstName, lastName, email, phone, addre
         return error;
     });
 }
+
+//TODO: Add search functionality
+export const searchUsers = () => {
+
+}

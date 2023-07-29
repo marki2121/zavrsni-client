@@ -21,6 +21,7 @@ import {Profile} from "./components/profile/Profile";
 import {UpdateProfile} from "./components/profile/UpdateProfile";
 import TeacherPortal from "./components/teacher/portal/TeacherPortal";
 import AddSubject from "./components/teacher/portal/AddSubject";
+import Subject from "./components/teacher/subject/Subject";
 
 const router = createBrowserRouter([
     {
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
                     {
                         path: "/teacher/subject/add",
                         element: <AddSubject />,
+                        errorElement: <Error/>
+                    },
+                    {
+                        path: "/teacher/subject/:id",
+                        element: <Subject />,
                         errorElement: <Error/>
                     }
                 ]

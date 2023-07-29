@@ -9,6 +9,9 @@ export const getAllSubjects = async (token) => {
         if(res.status === 200) {
             return res.data
         }
+        if(res.status === 400) {
+            return res.data
+        }
     }).catch((err) => {
         console.log(err)
     });
@@ -25,6 +28,64 @@ export const addSubjectApi = async (token, name, description, ects, semester, ye
         headers: {
             "Authorization": "Bearer " + token,
             "Content-Type": "application/json"
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
+export const getSubject = ( token, id ) => {
+    return API.get("/subject/teacher/" + id, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
+export const getSubjectStudents = ( token, id ) => {
+    return API.get("/subject/teacher/" + id + "/students", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
+export const addSubjectStudent = ( token, subjectId, studentId) => {
+    return API.post("/subject/teacher/" + subjectId + "/addStudent/" + studentId, {
+        studentId: studentId
+    },{
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
+export const deleteSutdentFromSubject = ( token, subjctId, studentId) => {
+    return API.delete("/subject/teacher/" + subjctId + "/removeStudent/" + studentId, {
+        headers: {
+            "Authorization": "Bearer " + token
         }
     }).then((res) => {
         if(res.status === 200) {
