@@ -22,6 +22,7 @@ import {UpdateProfile} from "./components/profile/UpdateProfile";
 import TeacherPortal from "./components/teacher/portal/TeacherPortal";
 import AddSubject from "./components/teacher/portal/AddSubject";
 import Subject from "./components/teacher/subject/Subject";
+import Home from "./components/home/Home";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
                 element: <App/>,
                 errorElement: <Error/>,
                 children: [
+                    {
+                        path: "/",
+                        element: <Home />,
+                        errorElement: <Error/>
+                    },
                     {
                         path: "/profile",
                         element: <Profile/>,

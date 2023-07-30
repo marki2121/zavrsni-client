@@ -95,3 +95,17 @@ export const deleteSutdentFromSubject = ( token, subjctId, studentId) => {
         console.log(err)
     });
 }
+
+export const getUserSubjects = ( token ) => {
+    return API.get("/subject/", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        } else if (res.status === 400) {
+            return [];
+        }
+    })
+}
