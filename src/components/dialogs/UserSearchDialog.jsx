@@ -1,62 +1,74 @@
 import {
     Avatar,
+    Button,
     Dialog,
     DialogTitle,
     List,
     ListItem,
     ListItemAvatar,
-    ListItemButton,
     ListItemText,
     TextField,
 } from "@mui/material";
 import React, {useState} from "react";
 import {blue} from "@mui/material/colors";
-import {Add} from "@mui/icons-material";
+import {searchUsers} from "../../functions/user/User";
+import {useCookies} from "react-cookie";
+import {addSubjectStudent} from "../../functions/subject/Subject";
 
 const UserSearchDialog = (props) => {
-    const { onClose, open } = props;
-    const [search, setSearch] = useState("");
+    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const { onClose, subject, open } = props;
+    const [users, setUsers] = useState([]);
 
     const handleListItemClick = (value) => {
+        addUser(value);
         onClose(value);
     };
 
-    const searchBar = (e) => {
-        setSearch(e.target.value)
+    const handleClose = () => {
+        onClose();
+    };
+
+    const searchBar = async (e) => {
+        if(e.target.value === "") {
+            setUsers([]);
+        } else {
+            const res = await searchUsers(cookie.access_token, e.target.value);
+
+            if(res.status === 200) {
+                setUsers(res.data)
+            } else {
+                console.log(res.data);
+            }
+        }
     }
-    const emails = ['mmaruna'];
+
+    const addUser = async (user) => {
+        console.log(user);
+        addSubjectStudent( cookie.access_token, subject, user.id);
+    }
 
     return(
         <Dialog open={open}>
             <DialogTitle>Search users</DialogTitle>
-            <TextField lable="users" mx={2} onChange={(e) => {searchBar(e)}}/>
-            <List sx={{ pt: 0 }}>
-                {emails.map((email) => (
-                    // eslint-disable-next-line react/jsx-no-undef
-                    <ListItem disableGutters>
-                        <ListItemButton onClick={() => handleListItemClick(email)} key={email}>
-                            <ListItemAvatar>
-                                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={email} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-                <ListItem disableGutters>
-                    <ListItemButton
-                        autoFocus
-                        onClick={() => handleListItemClick('addAccount')}
+            <TextField lable="users" sx={{mx: 2}} onChange={(e) => {searchBar(e)}}/>
+            <List>
+                {users.map((user) => (
+                    <ListItem
+                        button
+                        onClick={() => handleListItemClick(user)}
+                        key={user.id}
                     >
                         <ListItemAvatar>
-                            <Avatar>
-                                <Add />
+                            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary="Add account" />
-                    </ListItemButton>
-                </ListItem>
+                        <ListItemText primary={user.firstName + " " + user.lastName} />
+                    </ListItem>
+                ))}
             </List>
+            <Button variant="contained" sx={{m: 1}} onClick={() => handleClose()}>Close</Button>
         </Dialog>
     )
 }

@@ -60,10 +60,10 @@ export const getSubjectStudents = ( token, id ) => {
     }).then((res) => {
         if(res.status === 200) {
             return res.data
+        } else if (res.status === 400) {
+            return [];
         }
-    }).catch((err) => {
-        console.log(err)
-    });
+    })
 }
 
 export const addSubjectStudent = ( token, subjectId, studentId) => {

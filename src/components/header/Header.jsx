@@ -42,6 +42,11 @@ const Header = () => {
         setAnchorElUser(null);
     };
 
+    const logout = () => {
+        removeCookie('access_token', null);
+        setUser(null);
+        navigate("/auth/login");
+    };
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -180,7 +185,7 @@ const Header = () => {
                             <MenuItem component={Link} to="/profile">
                                 <Typography textAlign="center">Profile</Typography>
                             </MenuItem>
-                            <MenuItem onClick={() => {removeCookie('access_token', null)}}>
+                            <MenuItem onClick={() => {logout()}}>
                                 <Typography textAlign="center">Logout</Typography>
                             </MenuItem>
                         </Menu>

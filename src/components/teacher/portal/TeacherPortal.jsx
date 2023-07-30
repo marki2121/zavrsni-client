@@ -36,7 +36,7 @@ const TeacherPortal = () => {
             <Card sx={{my: 1.5}}>
                 <Box sx={{display: {md: 'flex'}, flexDirection: {md: "column"}}}>
                     <Box sx={{p: 2, mx: "auto"}}>
-                        <Typography variant="h6">
+                        <Typography variant="h6" sx={{fontSize: 30}}>
                             Teacher Portal
                         </Typography>
                     </Box>

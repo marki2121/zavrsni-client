@@ -35,7 +35,14 @@ export const updateSelf = async (token, firstName, lastName, email, phone, addre
     });
 }
 
-//TODO: Add search functionality
-export const searchUsers = () => {
-
+export const searchUsers = async ( token, search) => {
+    return await API.get("/user/" + search, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((response) => {
+        return response;
+    }).catch((error) => {
+        return error;
+    });
 }
