@@ -23,6 +23,7 @@ import TeacherPortal from "./components/teacher/portal/TeacherPortal";
 import AddSubject from "./components/teacher/portal/AddSubject";
 import Subject from "./components/teacher/subject/Subject";
 import Home from "./components/home/Home";
+import MySubject from "./components/user/subjects/MySubject";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
                     {
                         path: "/",
                         element: <Home />,
+                        errorElement: <Error/>
+                    },
+                    {
+                        path: "/mysubject/:id",
+                        element: <MySubject />,
                         errorElement: <Error/>
                     },
                     {

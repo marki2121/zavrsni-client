@@ -37,8 +37,8 @@ const Subject = () => {
         setOpenTests(true);
     };
 
-    const handleCloseUsers = async (value) => {
-        await getSubjectStudents( cookie.access_token, id)
+    const handleCloseUsers = (value) => {
+        getSubjectStudents( cookie.access_token, id)
             .then((r) => {
                 setStudents(r);
             }).catch((e) => {
@@ -46,8 +46,8 @@ const Subject = () => {
         setOpenUsers(false);
     };
 
-    const handleCloseTests = async (value) => {
-        await getTests( cookie.access_token, id)
+    const handleCloseTests = (value) => {
+        getTests( cookie.access_token, id)
             .then((r) => {
                 setTests(r);
             }).catch((e) => {

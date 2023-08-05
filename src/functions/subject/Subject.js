@@ -52,6 +52,20 @@ export const getSubject = ( token, id ) => {
     });
 }
 
+export const getSubjectUser = ( token, id ) => {
+    return API.get("/subject/" + id, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
 export const getSubjectStudents = ( token, id ) => {
     return API.get("/subject/teacher/" + id + "/students", {
         headers: {

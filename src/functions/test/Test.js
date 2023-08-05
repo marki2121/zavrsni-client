@@ -31,3 +31,45 @@ export const getTests = async ( token, subjectId ) => {
         console.log(e);
     })
 }
+
+export const getTestsUser = async ( token, subjectId ) => {
+    return await  Api.get("/test/" + subjectId + "/applications", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).catch((e) => {
+        console.log(e);
+    })
+}
+
+export const getTestsSubject = async ( token, subjectId ) => {
+    return await  Api.get("/test/" + subjectId, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).catch((e) => {
+        console.log(e);
+    })
+}
+
+export const applyForTest = async (token, testId) => {
+    return await Api.post("/application/" + testId, {}, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).catch((e) => {
+        console.log(e);
+    });
+}

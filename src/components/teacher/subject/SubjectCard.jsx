@@ -2,11 +2,12 @@ import {Button, Card, CardActions, CardContent, Grid, Typography} from "@mui/mat
 import React from "react";
 import {useNavigate} from "react-router-dom";
 
-const SubjectCard = (subject) => {
+const SubjectCard = (props) => {
     const navigate = useNavigate();
 
     const openSubject = () => {
-        navigate(`subject/${subject.subjects.id}`);
+        if(props.home === undefined) navigate(`subject/${props.subjects.id}`);
+        else navigate(`mysubject/${props.subjects.id}`);
     }
 
     return(
@@ -17,13 +18,13 @@ const SubjectCard = (subject) => {
                         Kolegij
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {subject.subjects.Name}
+                        {props.subjects.Name}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {subject.subjects.Year}
+                        {props.subjects.Year}
                     </Typography>
                     <Typography variant="body2">
-                        {subject.subjects.Description}
+                        {props.subjects.Description}
                     </Typography>
                 </CardContent>
                 <CardActions>

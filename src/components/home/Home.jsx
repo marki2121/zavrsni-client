@@ -34,7 +34,7 @@ const Home = () => {
                         <>
                             <Grid container spacing={3} columnSpacing={{ xs: 1, md: 3}} rows={{ xs: 1, sm: 3, md: 4 }} alignItems="center" justifyContent="center" sx={{p: 2}}>
                                 {subjects.map((subject) => (
-                                    <SubjectCard key={subject.id} subjects={subject}/>
+                                    <SubjectCard key={subject.id} subjects={subject} home={true}/>
                                 ))}
                             </Grid>
                         </>
