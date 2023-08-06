@@ -13,11 +13,28 @@ import React, {useEffect, useState} from "react";
 import {getAllUser} from "../../functions/admin/admin";
 import {FixedSizeList} from "react-window";
 import {blue} from "@mui/material/colors";
+import AdminDialog from "../dialogs/AdminDialog";
 
 const AdminPanel = () => {
     const [cookies, , ] = useCookies(['access_token']);
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [user, setUser] = useState(null);
+
+    const handleOpen = () => {
+        console.log(open);
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        getAllUser(cookies.access_token)
+            .then(res => {
+                setUsers(res);
+                setUser(null);
+                setOpen(false);
+            });
+    }
 
     useEffect(() => {
         getAllUser(cookies.access_token)
@@ -34,13 +51,9 @@ const AdminPanel = () => {
         return(
             <ListItemButton
                 key={users[index].id}
+                onClick={() => { setUser(users[index].id); handleOpen()}}
             >
-                <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={users[index].firstName + " " + users[index].lastName + " " + users[index].role} />
+                <ListItemText primary={"Full name: " + users[index].firstName + " " + users[index].lastName + " | Role: " + users[index].role} />
             </ListItemButton>
         )
     }
@@ -64,6 +77,7 @@ const AdminPanel = () => {
                                         No users found
                                     </Typography>
                                     :
+                                <>
                                     <FixedSizeList
                                         height={500}
                                         width={"90%"}
@@ -73,6 +87,12 @@ const AdminPanel = () => {
                                     >
                                         {row}
                                     </FixedSizeList>
+                                    <AdminDialog
+                                        open={open}
+                                        userId={user}
+                                        onClose={handleClose}
+                                        />
+                                </>
                             }
                             </>
                         :

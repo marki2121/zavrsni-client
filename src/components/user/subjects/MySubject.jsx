@@ -74,7 +74,7 @@ const MySubject = () => {
                         <ListItemText primary={"Date: " + tests[index].testDate + " | Note: " + tests[index].testNote + " | Grade: " + tests[index].testGrade + "%"}  />
                     </ListItem>
                     :
-                    <ListItemButton key={tests[index].id} onClick={() => {setTestId(tests[index].id); handleClickOpenCancleTest(tests[index].id)}}>
+                    <ListItemButton key={tests[index].id} onClick={() => {setTestId(tests[index].id); handleClickOpenCancleTest()}}>
                         <ListItemText primary={"Date: " + tests[index].testDate + " | Note: " + tests[index].testNote} />
                     </ListItemButton>
             }
