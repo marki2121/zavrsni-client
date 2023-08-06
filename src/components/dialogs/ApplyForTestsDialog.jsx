@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {Button, CircularProgress, Dialog, DialogTitle, List, ListItemButton, ListItemText} from "@mui/material";
 import {applyForTest, getTestsSubject} from "../../functions/test/Test";
 
-const ApplyForTests = (props) => {
+const ApplyForTestsDialog = (props) => {
     const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
     const { onClose, subject, open } = props;
     const [tests, setTests] = useState([]);
@@ -53,4 +53,4 @@ const ApplyForTests = (props) => {
     )
 }
 
-export default ApplyForTests;
+export default ApplyForTestsDialog;

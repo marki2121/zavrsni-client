@@ -101,3 +101,17 @@ export const gradeTestApplicant = async (token, testId, grade) => {
         console.log(e)
     })
 }
+
+export const cancelTestApplication = async (token, test) => {
+    return await Api.delete("/application/" + test, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).catch((e) => {
+        console.log(e)
+    })
+}

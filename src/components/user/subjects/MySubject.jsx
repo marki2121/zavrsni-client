@@ -3,9 +3,10 @@ import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {getSubjectUser} from "../../../functions/subject/Subject";
 import {getTestsUser} from "../../../functions/test/Test";
-import {Box, Button, Card, CircularProgress, ListItem, ListItemText, Typography} from "@mui/material";
+import {Box, Button, Card, CircularProgress, ListItem, ListItemButton, ListItemText, Typography} from "@mui/material";
 import {FixedSizeList} from "react-window";
-import ApplyForTests from "../../dialogs/ApplyForTests";
+import ApplyForTestsDialog from "../../dialogs/ApplyForTestsDialog";
+import CancleTestDialog from "../../dialogs/CancleTestDialog";
 
 const MySubject = () => {
     const {id} = useParams();
@@ -13,6 +14,8 @@ const MySubject = () => {
     const [ cookie, ,  ] = useCookies(['access_token']);
     const [loading, setLoading] = useState(true);
     const [openTests, setOpenTests] = React.useState(false);
+    const [testId, setTestId] = useState(null);
+    const [openCancleTest, setOpenCancleTest] = React.useState(false);
     const [tests, setTests] = useState([]);
     const [ind, setInd] = useState(null);
 
@@ -21,8 +24,29 @@ const MySubject = () => {
         setOpenTests(true);
     };
 
+    const handleClickOpenCancleTest = ( index ) => {
+        setOpenCancleTest(true);
+    };
+
     const handleCloseTest = (value) => {
-        setOpenTests(false);
+        getTestsUser( cookie.access_token, id )
+            .then((r) => {
+                setTests(r);
+                setOpenTests(false);
+            })
+    };
+
+    const handleCloseCancleTest = (value) => {
+        if(value) {
+            getTestsUser( cookie.access_token, id )
+                .then((r) => {
+                    setTests(r);
+                    setOpenCancleTest(false);
+                }).catch((e) => {
+            });
+        } else {
+            setOpenCancleTest(false);
+        }
     };
 
     useEffect(() => {
@@ -44,9 +68,17 @@ const MySubject = () => {
 
     const rowTest = ({index, style}) => {
         return(
-            <ListItem key={tests[index].id}>
-                <ListItemText primary={"Date: " + tests[index].testDate + " Note: " + tests[index].testNote} />
-            </ListItem>
+            <>
+            {tests[index].testGraded ?
+                    <ListItem key={tests[index].id}>
+                        <ListItemText primary={"Date: " + tests[index].testDate + " | Note: " + tests[index].testNote + " | Grade: " + tests[index].testGrade + "%"}  />
+                    </ListItem>
+                    :
+                    <ListItemButton key={tests[index].id} onClick={() => {setTestId(tests[index].id); handleClickOpenCancleTest(tests[index].id)}}>
+                        <ListItemText primary={"Date: " + tests[index].testDate + " | Note: " + tests[index].testNote} />
+                    </ListItemButton>
+            }
+            </>
         )
     }
 
@@ -82,10 +114,15 @@ const MySubject = () => {
                                         <Button variant="contained" onClick={handleClickOpenTest}>
                                             Apply for test
                                         </Button>
-                                        <ApplyForTests
+                                        <ApplyForTestsDialog
                                             open={openTests}
                                             subject={subject.id}
                                             onClose={handleCloseTest}
+                                        />
+                                        <CancleTestDialog
+                                            open={openCancleTest}
+                                            test={testId}
+                                            onClose={handleCloseCancleTest}
                                         />
                                     </Box>
                                 </Box>
