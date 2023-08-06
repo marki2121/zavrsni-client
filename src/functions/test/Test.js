@@ -73,3 +73,31 @@ export const applyForTest = async (token, testId) => {
         console.log(e);
     });
 }
+
+export const getAllApplicants = async (token, testId) => {
+        return await Api.get("/test/teacher/"+ testId + "/applicants", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).catch((e) => {
+        console.log(e);
+    });
+}
+
+export const gradeTestApplicant = async (token, testId, grade) => {
+    return await Api.post("/test/teacher/" + testId + "/grade/" + grade, {}, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).catch((e) => {
+        console.log(e)
+    })
+}

@@ -5,8 +5,8 @@ import {
     Button,
     Card,
     CircularProgress,
-    ListItem,
     ListItemAvatar,
+    ListItemButton,
     ListItemText,
     Typography
 } from "@mui/material";
@@ -18,6 +18,7 @@ import UserSearchDialog from "../../dialogs/UserSearchDialog";
 import {blue} from "@mui/material/colors";
 import CreateTestDialog from "../../dialogs/CreateTestDialog";
 import {getTests} from "../../../functions/test/Test";
+import GradeTestDialog from "../../dialogs/GradeTestDialog";
 
 const Subject = () => {
     const {id} = useParams();
@@ -26,6 +27,8 @@ const Subject = () => {
     const [loading, setLoading] = useState(true);
     const [openUsers, setOpenUsers] = React.useState(false);
     const [openTests, setOpenTests] = React.useState(false);
+    const [openTestGrading, setOpenTestGrading] = React.useState(false);
+    const [testId, setTestId] = useState(null);
     const [students, setStudents] = useState([]);
     const [tests, setTests] = useState([]);
 
@@ -36,6 +39,15 @@ const Subject = () => {
     const handleClickOpenTests = () => {
         setOpenTests(true);
     };
+
+    const handleClickOpenTestGrading = (id) => {
+        setTestId(id);
+        setOpenTestGrading(true);
+    };
+
+    const handleCloseGrading = (value) => {
+        setOpenTestGrading(false);
+    }
 
     const handleCloseUsers = (value) => {
         getSubjectStudents( cookie.access_token, id)
@@ -81,8 +93,7 @@ const Subject = () => {
 
     const rowStudent = ({index, style}) => {
         return(
-            <ListItem
-                button
+            <ListItemButton
                 key={students[index].id}
             >
                 <ListItemAvatar>
@@ -91,23 +102,25 @@ const Subject = () => {
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={students[index].firstName + " " + students[index].lastName} />
-            </ListItem>
+            </ListItemButton>
         )
     }
 
     const rowTest = ({index, style}) => {
         return(
-            <ListItem
-                button
-                key={tests[index].id}
-            >
-                <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+            <>
+                <ListItemButton
+                    key={tests[index].id}
+                    onClick={() => {handleClickOpenTestGrading(tests[index].id)}}
+                >
+                    <ListItemAvatar>
+                        <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
 
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={"Date: " + tests[index].date + " Note: " + tests[index].note} />
-            </ListItem>
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={"Date: " + tests[index].date + " Note: " + tests[index].note} />
+                </ListItemButton>
+            </>
         )
     }
 
@@ -177,6 +190,11 @@ const Subject = () => {
                                             subject={subject.id}
                                             onClose={handleCloseTests}
                                         />
+                                        <GradeTestDialog
+                                            open={openTestGrading}
+                                            test={testId}
+                                            subject={subject.id}
+                                            onClose={handleCloseGrading} />
                                     </Box>
                                 </Box>
                                 { tests.length < 1 ?

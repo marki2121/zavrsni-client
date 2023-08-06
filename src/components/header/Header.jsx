@@ -12,7 +12,7 @@ import {
     Tooltip,
     Typography
 } from "@mui/material";
-import {Adb, MenuBook} from "@mui/icons-material";
+import {MenuBook} from "@mui/icons-material";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate} from "react-router-dom";
 import {UserContext} from "../../App";
@@ -51,7 +51,6 @@ const Header = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Adb sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -66,8 +65,9 @@ const Header = () => {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
+                        onClick={() => {navigate("/")}}
                     >
-                        LOGO
+                        STUDOMAT
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -116,7 +116,6 @@ const Header = () => {
                             }
                         </Menu>
                     </Box>
-                    <Adb sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
                         noWrap
@@ -132,8 +131,9 @@ const Header = () => {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
+                        onClick={() => {navigate("/")}}
                     >
-                        LOGO
+                        STUDOMAT
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {user.role !== null && user.role === "TEACHER" || user.role === "ADMIN" ?
