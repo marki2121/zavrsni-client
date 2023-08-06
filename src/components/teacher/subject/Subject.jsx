@@ -53,18 +53,18 @@ const Subject = () => {
         getSubjectStudents( cookie.access_token, id)
             .then((r) => {
                 setStudents(r);
+                setOpenUsers(false);
             }).catch((e) => {
         })
-        setOpenUsers(false);
     };
 
     const handleCloseTests = (value) => {
         getTests( cookie.access_token, id)
             .then((r) => {
                 setTests(r);
+                setOpenTests(false);
             }).catch((e) => {
             });
-        setOpenTests(false);
     };
 
     useEffect(() => {

@@ -15,8 +15,9 @@ const CreateTestDialog = (props) => {
     };
 
     const addTestToSubject = () => {
-        addTest(cookie.access_token, subject, date, note);
-        onClose();
+        addTest(cookie.access_token, subject, date, note).then(r => {
+            onClose();
+        })
     }
 
     return(

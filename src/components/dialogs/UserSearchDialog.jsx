@@ -21,8 +21,9 @@ const UserSearchDialog = (props) => {
     const [users, setUsers] = useState([]);
 
     const handleListItemClick = (value) => {
-        addUser(value);
-        onClose(value);
+        addUser(value).then(() => {
+            onClose(value);
+        });
     };
 
     const handleClose = () => {
