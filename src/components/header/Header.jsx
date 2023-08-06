@@ -108,7 +108,7 @@ const Header = () => {
                             }
                             {
                                 user.role !== null && user.role === "ADMIN" ?
-                                    <MenuItem onClick={handleCloseNavMenu}>
+                                    <MenuItem onClick={handleCloseNavMenu} component={Link} to="/admin">
                                         <Typography textAlign="center">Admin</Typography>
                                     </MenuItem>
                                     :
@@ -152,6 +152,8 @@ const Header = () => {
                             <Button
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
+                                component={Link}
+                                to="/admin"
                             >
                                 Admin
                             </Button>
