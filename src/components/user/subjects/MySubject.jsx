@@ -71,7 +71,7 @@ const MySubject = () => {
             <>
             {tests[index].testGraded ?
                     <ListItem key={tests[index].id}>
-                        <ListItemText primary={"Date: " + tests[index].testDate + " | Note: " + tests[index].testNote + " | Grade: " + tests[index].testGrade + "%"}  />
+                        <ListItemText primary={"Date: " + tests[index].testDate + " | Note: " + tests[index].testNote + " | Grade: " + tests[index].grade + "%"}  />
                     </ListItem>
                     :
                     <ListItemButton key={tests[index].id} onClick={() => {setTestId(tests[index].id); handleClickOpenCancleTest()}}>

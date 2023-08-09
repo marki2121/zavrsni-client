@@ -13,7 +13,7 @@ const Signup = () => {
     const callSignup = async () => {
         const response = await register(username, password, confirmPassword);
 
-        if(response.status === 201) {
+        if(response.status === 200) {
             navigate("/auth/login/");
         };
     };

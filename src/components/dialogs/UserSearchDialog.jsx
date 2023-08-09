@@ -61,9 +61,7 @@ const UserSearchDialog = (props) => {
                         key={user.id}
                     >
                         <ListItemAvatar>
-                            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-
-                            </Avatar>
+                            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }} src={user.imageUrl} />
                         </ListItemAvatar>
                         <ListItemText primary={user.firstName + " " + user.lastName} />
                     </ListItem>

@@ -97,9 +97,7 @@ const Subject = () => {
                 key={students[index].id}
             >
                 <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-
-                    </Avatar>
+                    <Avatar sx={{ bgcolor: blue[100], color: blue[600] }} src={students[index].imageUrl} />
                 </ListItemAvatar>
                 <ListItemText primary={students[index].firstName + " " + students[index].lastName} />
             </ListItemButton>
@@ -113,11 +111,6 @@ const Subject = () => {
                     key={tests[index].id}
                     onClick={() => {handleClickOpenTestGrading(tests[index].id)}}
                 >
-                    <ListItemAvatar>
-                        <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-
-                        </Avatar>
-                    </ListItemAvatar>
                     <ListItemText primary={"Date: " + tests[index].date + " Note: " + tests[index].note} />
                 </ListItemButton>
             </>

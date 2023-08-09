@@ -16,7 +16,7 @@ export const Profile = () => {
             <Card sx={{my: 1.5}}>
                 <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'row'}}}>
                     <Box sx={{height: {md: 'max'}, m: 4}}>
-                        <Avatar sx={{ width: 136, height: 136 }} src="/static/images/avatar/2.jpg" alt="Avatar"/>
+                        <Avatar sx={{ width: 136, height: 136 }} src={user.imageUrl} alt="Avatar"/>
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: 4, ml: {xs: 2}, mx: 'auto'}}>
                         <Typography variant="h6" component="h6">

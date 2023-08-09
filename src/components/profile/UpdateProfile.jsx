@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import {Avatar, Box, Button, Card, TextField} from "@mui/material";
 import {UserContext} from "../../App";
 import {useCookies} from "react-cookie";
-import {getSelf, updateSelf} from "../../functions/user/User";
+import {getSelf, updateSelf, uploadImages} from "../../functions/user/User";
 import {useNavigate} from "react-router-dom";
 
 export const UpdateProfile = () => {
@@ -39,7 +39,20 @@ export const UpdateProfile = () => {
     };
 
     const uploadImage = async (e) => {
-        setImage(e.target.files[0]);
+        await uploadImages(cookie.access_token, e.target.files[0])
+            .then((response) => {
+                getSelf(cookie.access_token)
+                    .then((response) => {
+                        setUser(response.data);
+
+                        navigate('/profile');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
@@ -47,7 +60,7 @@ export const UpdateProfile = () => {
             <Card sx={{my: 1.5}}>
                 <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'row'}}}>
                     <Box sx={{height: {md: 'max'}, m: 4}}>
-                        <Avatar sx={{ width: 136, height: 136 }} src="/static/images/avatar/2.jpg" alt={user.firstName}/>
+                        <Avatar sx={{ width: 136, height: 136 }} src={user.imageUrl} alt={user.firstName}/>
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: 4, ml: {xs: 2}, mx: 'auto'}}>
                         <TextField sx={{m: 1}} label="name" onChange={(e) => {setName(e.target.value)}}/>

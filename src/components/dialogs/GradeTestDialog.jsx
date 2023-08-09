@@ -1,4 +1,15 @@
-import {Box, Button, CircularProgress, Dialog, DialogTitle, ListItemButton, TextField, Typography} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogTitle,
+    ListItemAvatar,
+    ListItemButton,
+    TextField,
+    Typography
+} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {FixedSizeList} from "react-window";
 import {getAllApplicants, gradeTestApplicant} from "../../functions/test/Test";
@@ -47,6 +58,9 @@ const GradeTestDialog = (props) => {
                             onClick={() => {select(applicants[index].id); console.log(graded)}}
                             selected={true}
                         >
+                            <ListItemAvatar>
+                                <Avatar src={applicants[index].imageUrl} sx={{mr: 2}} />
+                            </ListItemAvatar>
                             <Typography>
                                 {applicants[index].studentName}
                             </Typography>
@@ -56,6 +70,7 @@ const GradeTestDialog = (props) => {
                             key={applicants[index].id}
                             onClick={() => select(applicants[index].id, index)}
                         >
+                            <ListItemAvatar src={applicants[index].imageUrl} sx={{mr: 2}} />
                             <Typography>
                                 {applicants[index].studentName}
                             </Typography>
