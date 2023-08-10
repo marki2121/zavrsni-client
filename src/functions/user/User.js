@@ -46,3 +46,14 @@ export const searchUsers = async ( token, search) => {
         return error;
     });
 }
+
+export const uploadImages = async (token, image) => {
+    const formData = new FormData();
+    formData.append("files", image);
+    return await API.post("/file/upload", formData, {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "multipart/form-data"
+        }
+    })
+}
