@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {deleteSubject, getSubject, getSubjectStudents, updateSubject} from "../../../functions/subject/Subject";
@@ -17,6 +17,8 @@ import {
 } from "@mui/material";
 import {blue} from "@mui/material/colors";
 import {FixedSizeList} from "react-window";
+import RemoveStudentDialog from "../../dialogs/RemoveStudentDialog";
+import EditTestDialog from "../../dialogs/EditTestDialog";
 
 const UpdateSubject = () => {
     const {id} = useParams();
@@ -31,6 +33,46 @@ const UpdateSubject = () => {
     const [ects, setEcts] = useState(null);
     const [semester, setSemester] = useState(null);
     const [year, setYear] = useState(null);
+    const [openUsers, setOpenUsers] = useState(false);
+    const [openTests, setOpenTests] = useState(false);
+    const [studentId, setStudentId] = useState(null);
+    const [test, setTest] = useState({id: null, date: null, note: null});
+
+    const handleClickOpenUsers = (id) => {
+        setStudentId(id);
+        setOpenUsers(true);
+    };
+
+    const handleClickOpenTests = (test1) => {
+        setTest(test1);
+        setOpenTests(true);
+    };
+
+    const handleCloseUser = () => {
+        setLoading(true);
+        setStudents([]);
+        getSubjectStudents( cookie.access_token, id )
+            .then((r) => {
+                setStudents(r);
+                setOpenUsers(false);
+                setLoading(false);
+            }).catch((e) => {
+            console.log(e);
+        })
+    };
+
+    const handleCloseTest = () => {
+        setLoading(true);
+        setTests([]);
+        getTests(cookie.access_token, id)
+            .then((r) => {
+                setTests(r);
+                setOpenTests(false);
+                setLoading(false);
+            }).catch((e) => {
+            console.log(e);
+        })
+    }
 
     const update = () => {
         updateSubject(cookie.access_token, id, name, description, ects, semester, year)
@@ -76,6 +118,7 @@ const UpdateSubject = () => {
         return(
             <ListItemButton
                 key={students[index].id}
+                onClick={() => {handleClickOpenUsers(students[index].id)}}
             >
                 <ListItemAvatar>
                     <Avatar sx={{ bgcolor: blue[100], color: blue[600] }} src={students[index].imageUrl} />
@@ -90,7 +133,7 @@ const UpdateSubject = () => {
             <>
                 <ListItemButton
                     key={tests[index].id}
-                    onClick={() => {}}
+                    onClick={() => {handleClickOpenTests(tests[index])}}
                 >
                     <ListItemText primary={"Date: " + tests[index].date + " Note: " + tests[index].note} />
                 </ListItemButton>
@@ -125,14 +168,22 @@ const UpdateSubject = () => {
                                         No students
                                     </Typography>
                                     :
-                                    <FixedSizeList
-                                        height={150}
-                                        itemCount={students.length}
-                                        itemSize={35}
-                                        style={{margin: 2, border: "1px solid lightgray"}}
-                                    >
-                                        {rowStudent}
-                                    </FixedSizeList>
+                                    <>
+                                        <FixedSizeList
+                                            height={150}
+                                            itemCount={students.length}
+                                            itemSize={35}
+                                            style={{margin: 2, border: "1px solid lightgray"}}
+                                        >
+                                            {rowStudent}
+                                        </FixedSizeList>
+                                        <RemoveStudentDialog
+                                            open={openUsers}
+                                            subject={id}
+                                            student={studentId}
+                                            onClose={handleCloseUser}
+                                        />
+                                    </>
                                 }
                                 <Box sx={{display: 'flex', flexDirection:  "row", my: 1}}>
                                     <Typography variant="h6">
@@ -144,15 +195,22 @@ const UpdateSubject = () => {
                                         No Tests
                                     </Typography>
                                     :
-                                    <FixedSizeList
-                                        height={150}
-                                        itemCount={tests.length}
-                                        itemSize={35}
-                                        margin={2}
-                                        style={{margin: 2, border: "1px solid lightgray"}}
-                                    >
-                                        {rowTest}
-                                    </FixedSizeList>
+                                    <>
+                                        <FixedSizeList
+                                            height={150}
+                                            itemCount={tests.length}
+                                            itemSize={35}
+                                            margin={2}
+                                            style={{margin: 2, border: "1px solid lightgray"}}
+                                        >
+                                            {rowTest}
+                                        </FixedSizeList>
+                                        <EditTestDialog
+                                            open={openTests}
+                                            test={test}
+                                            onClose={handleCloseTest}
+                                        />
+                                    </>
                                 }
                                 <Box justifyContent="center" justifyItems="center" display="flex" sx={{flexDirection: {m: "row"}, my: 2}}>
                                     <Box m={2}>
@@ -163,6 +221,11 @@ const UpdateSubject = () => {
                                     <Box m={2}>
                                         <Button variant="contained" color="warning" onClick={() => {deleteSub()}}>
                                             Delete
+                                        </Button>
+                                    </Box>
+                                    <Box m={2}>
+                                        <Button variant="contained" component={Link} to={"/teacher/subject/" + id}>
+                                            Close
                                         </Button>
                                     </Box>
                                 </Box>

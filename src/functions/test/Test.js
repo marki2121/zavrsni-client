@@ -115,3 +115,35 @@ export const cancelTestApplication = async (token, test) => {
         console.log(e)
     })
 }
+
+export const deleteTest = async (token, id) => {
+    return await Api.delete("/test/teacher/" + id, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((e) => {
+        console.log(e)
+    });
+}
+
+export const updateTest = async (token, id, date, note) => {
+    return await Api.put("/test/teacher/" + id + "/update", {
+        date: date,
+        note: note
+    }, {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((e) => {
+        console.log(e)
+    });
+}
