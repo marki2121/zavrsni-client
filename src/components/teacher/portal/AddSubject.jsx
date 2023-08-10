@@ -16,7 +16,6 @@ const AddSubject = () => {
 
     const addSubject = async () => {
         await addSubjectApi(cookie.access_token, name, description, ects, semester, year).then((response) => {
-            alert("Subject added successfully");
             navigate("/teacher")
         }).catch((error) => {
             alert("Error adding subject");
@@ -30,11 +29,11 @@ const AddSubject = () => {
                     <Box alignItems="center" justifyContent="center" sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: 4, m: "auto"}}>
                         <TextField sx={{m: 2}} label="name" onChange={(e) => {setName(e.target.value)}}/>
                         <TextField sx={{m: 2}} label="description" onChange={(e) => {setDescription(e.target.value)}}/>
-                        <TextField sx={{m: 2}} label="ects" onChange={(e) => {setEcts(e.target.value)}}/>
+                        <TextField sx={{m: 2}} label="ects" type="number" onChange={(e) => {setEcts(e.target.value)}}/>
                     </Box>
                     <Box alignItems="center" justifyContent="center" sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: {md: 4}, m: 'auto'} }>
-                        <TextField sx={{m: 2}} label="semester" onChange={(e) => {setSemester(e.target.value)}}/>
-                        <TextField sx={{m: 2}} label="year" onChange={(e) => {setYear(e.target.value)}}/>
+                        <TextField sx={{m: 2}} label="semester" type="number" onChange={(e) => {setSemester(e.target.value)}}/>
+                        <TextField sx={{m: 2}} label="year" type="number" onChange={(e) => {setYear(e.target.value)}}/>
                     </Box>
                 </Box>
                 <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}}}>

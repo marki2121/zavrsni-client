@@ -1,4 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useCookies} from "react-cookie";
+import {deleteSubject, getSubject, getSubjectStudents, updateSubject} from "../../../functions/subject/Subject";
+import {getTests} from "../../../functions/test/Test";
 import {
     Avatar,
     Box,
@@ -8,65 +12,41 @@ import {
     ListItemAvatar,
     ListItemButton,
     ListItemText,
+    TextField,
     Typography
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {getSubject, getSubjectStudents} from "../../../functions/subject/Subject";
-import {useCookies} from "react-cookie";
-import {FixedSizeList} from "react-window";
-import UserSearchDialog from "../../dialogs/UserSearchDialog";
 import {blue} from "@mui/material/colors";
-import CreateTestDialog from "../../dialogs/CreateTestDialog";
-import {getTests} from "../../../functions/test/Test";
-import GradeTestDialog from "../../dialogs/GradeTestDialog";
+import {FixedSizeList} from "react-window";
 
-const Subject = () => {
+const UpdateSubject = () => {
     const {id} = useParams();
     const [subject, setSubject] = useState(null);
     const [ cookie, ,  ] = useCookies(['access_token']);
     const [loading, setLoading] = useState(true);
-    const [openUsers, setOpenUsers] = React.useState(false);
-    const [openTests, setOpenTests] = React.useState(false);
-    const [openTestGrading, setOpenTestGrading] = React.useState(false);
-    const [testId, setTestId] = useState(null);
     const [students, setStudents] = useState([]);
     const [tests, setTests] = useState([]);
     const navigate = useNavigate();
+    const [name, setName] = useState(null);
+    const [description, setDescription] = useState(null);
+    const [ects, setEcts] = useState(null);
+    const [semester, setSemester] = useState(null);
+    const [year, setYear] = useState(null);
 
-    const handleClickOpenUsers = () => {
-        setOpenUsers(true);
-    };
-
-    const handleClickOpenTests = () => {
-        setOpenTests(true);
-    };
-
-    const handleClickOpenTestGrading = (id) => {
-        setTestId(id);
-        setOpenTestGrading(true);
-    };
-
-    const handleCloseGrading = (value) => {
-        setOpenTestGrading(false);
-    }
-
-    const handleCloseUsers = (value) => {
-        getSubjectStudents( cookie.access_token, id)
+    const update = () => {
+        updateSubject(cookie.access_token, id, name, description, ects, semester, year)
             .then((r) => {
-                setStudents(r);
-                setOpenUsers(false);
+                navigate("/teacher/subject/" + id);
             }).catch((e) => {
         });
-    };
+    }
 
-    const handleCloseTests = (value) => {
-        getTests( cookie.access_token, id)
-            .then((r) => {
-                setTests(r);
-                setOpenTests(false);
-            }).catch((e) => {
-            });
-    };
+    const deleteSub = () => {
+        deleteSubject(cookie.access_token, id).then((r) => {
+            navigate("/teacher");
+        }).catch((e) => {
+        });
+    }
+
 
     useEffect(() => {
         if( cookie.access_token && loading){
@@ -74,7 +54,7 @@ const Subject = () => {
                 .then((r) => {
                     setSubject(r);
                 }).catch((e) => {
-                })
+            })
 
             getTests( cookie.access_token, id )
                 .then((r) => {
@@ -87,8 +67,8 @@ const Subject = () => {
                     setStudents(r);
                     setLoading(false);
                 }).catch((e) => {
-                    console.log(e);
-                })
+                console.log(e);
+            })
         }
     });
 
@@ -110,7 +90,7 @@ const Subject = () => {
             <>
                 <ListItemButton
                     key={tests[index].id}
-                    onClick={() => {handleClickOpenTestGrading(tests[index].id)}}
+                    onClick={() => {}}
                 >
                     <ListItemText primary={"Date: " + tests[index].date + " Note: " + tests[index].note} />
                 </ListItemButton>
@@ -124,38 +104,21 @@ const Subject = () => {
                 { !loading ?
                     <Box sx={{p: 2}}>
                         <Typography variant="h6" align={"center"} sx={{mb: 2, fontSize: 30}}>
-                            {subject.Name}
+                            Update subject
                         </Typography>
                         <Box sx={{display: {md: 'flex'}, flexDirection: {md: "row"}, width: "100%"}}>
-                            <Box m={2} sx={{width: "100%"}}>
-                                <Typography variant="h6">
-                                    Subject description: {subject.Description}
-                                </Typography>
-                                <Typography variant="h6">
-                                    Ects: {subject.Ects}
-                                </Typography>
-                                <Typography variant="h6">
-                                    Semester: {subject.Semester}
-                                </Typography>
-                                <Typography variant="h6">
-                                    Year: {subject.Year}
-                                </Typography>
+                            <Box m={2} sx={{width: "100%"}} display="flex" flexDirection="column" >
+                                <TextField sx={{margin: 2}} label="Subject name" placeholder={subject.Name} onChange={(e) => {setName(e.target.value)}}/>
+                                <TextField sx={{margin: 2}} label="Subject description" placeholder={subject.Description} onChange={(e) => {setDescription(e.target.value)}}/>
+                                <TextField sx={{margin: 2}} label="Ects" placeholder={subject.Ects} type="number" onChange={(e) => {setEcts(e.target.value)}}/>
+                                <TextField sx={{margin: 2}} label="Semester" placeholder={subject.Semester} type="number" onChange={(e) => {setSemester(e.target.value)}}/>
+                                <TextField sx={{margin: 2}} label="Year" placeholder={subject.Year} type="number" onChange={(e) => {setYear(e.target.value)}}/>
                             </Box>
                             <Box sx={{display: {md: 'flex'}, flexDirection: {md: "column"}, width: "100%"}}>
                                 <Box sx={{display: 'flex', flexDirection:  "row", my: 1}}>
                                     <Typography variant="h6">
                                         Students:
                                     </Typography>
-                                    <Box display="flex" justifyContent="flex-end" width="100%">
-                                        <Button variant="contained" onClick={handleClickOpenUsers}>
-                                            Add student
-                                        </Button>
-                                        <UserSearchDialog
-                                            open={openUsers}
-                                            subject={subject.id}
-                                            onClose={handleCloseUsers}
-                                        />
-                                    </Box>
                                 </Box>
                                 { students.length < 1 ?
                                     <Typography variant="body1">
@@ -175,21 +138,6 @@ const Subject = () => {
                                     <Typography variant="h6">
                                         Tests:
                                     </Typography>
-                                    <Box display="flex" justifyContent="flex-end" width="100%">
-                                        <Button variant="contained" onClick={handleClickOpenTests}>
-                                            Add test
-                                        </Button>
-                                        <CreateTestDialog
-                                            open={openTests}
-                                            subject={subject.id}
-                                            onClose={handleCloseTests}
-                                        />
-                                        <GradeTestDialog
-                                            open={openTestGrading}
-                                            test={testId}
-                                            subject={subject.id}
-                                            onClose={handleCloseGrading} />
-                                    </Box>
                                 </Box>
                                 { tests.length < 1 ?
                                     <Typography variant="body1">
@@ -206,15 +154,22 @@ const Subject = () => {
                                         {rowTest}
                                     </FixedSizeList>
                                 }
-                                <Box sx={{my: 2}} justifyContent="center" justifyItems="center" display="flex">
-                                    <Button variant="contained" onClick={() => {navigate("/teacher/subject/" + subject.id + "/update")}}>
-                                        Update
-                                    </Button>
+                                <Box sx={{my: 2}} justifyContent="center" justifyItems="center" display="flex" sx={{flexDirection: {m: "row"}}}>
+                                    <Box m={2}>
+                                        <Button variant="contained" onClick={() => {update()}}>
+                                            Update
+                                        </Button>
+                                    </Box>
+                                    <Box m={2}>
+                                        <Button variant="contained" color="warning" onClick={() => {deleteSub()}}>
+                                            Delete
+                                        </Button>
+                                    </Box>
                                 </Box>
                             </Box>
                         </Box>
                     </Box>
-                :
+                    :
                     <Box sx={{p: 2, mx: "auto"}}>
                         <CircularProgress />
                     </Box>
@@ -224,4 +179,4 @@ const Subject = () => {
     )
 }
 
-export default Subject;
+export default UpdateSubject;

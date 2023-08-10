@@ -70,9 +70,9 @@ export const UpdateProfile = () => {
                     </Box>
                     <Box sx={{display: {md: 'flex'}, flexDirection: {md: 'column'}, height: {md: 'max'}, mt: {md: 4}, ml: {xs: 2}, mx: 'auto'}}>
                         <TextField sx={{m: 1}} label="city" placeholder={user.city} onChange={(e) => {setCity(e.target.value)}}/>
-                        <TextField sx={{m: 1}} label="zip code" placeholder={user.zipCode} onChange={(e) => {setZipCode(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="zip code"  placeholder={user.zipCode} type="number" onChange={(e) => {setZipCode(e.target.value)}}/>
                         <TextField sx={{m: 1}} label="country" placeholder={user.country} onChange={(e) => {setCountry(e.target.value)}}/>
-                        <TextField sx={{m: 1}} label="phone" placeholder={user.phone} onChange={(e) => {setPhone(e.target.value)}}/>
+                        <TextField sx={{m: 1}} label="phone" placeholder={user.phone} type="number" onChange={(e) => {setPhone(e.target.value)}}/>
                     </Box>
                 </Box>
                 <Box>

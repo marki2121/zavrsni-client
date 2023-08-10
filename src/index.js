@@ -25,6 +25,7 @@ import Subject from "./components/teacher/subject/Subject";
 import Home from "./components/home/Home";
 import MySubject from "./components/user/subjects/MySubject";
 import AdminPanel from "./components/admin/AdminPanel";
+import UpdateSubject from "./components/teacher/subject/UpdateSubject";
 
 const router = createBrowserRouter([
     {
@@ -71,6 +72,11 @@ const router = createBrowserRouter([
                         path: "/teacher/subject/:id",
                         element: <Subject />,
                         errorElement: <Error/>
+                    },
+                    {
+                        path: "/teacher/subject/:id/update",
+                        element: <UpdateSubject />,
+                        errorElement: <Error />
                     },
                     {
                         path: "/admin",

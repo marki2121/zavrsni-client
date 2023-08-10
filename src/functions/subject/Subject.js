@@ -123,3 +123,38 @@ export const getUserSubjects = ( token ) => {
         }
     })
 }
+
+export const updateSubject = async ( token, id, name, description, ects, semester, year) => {
+    return await API.put("/subject/teacher/" + id + "/update", {
+        name: name,
+        description: description,
+        ects: ects,
+        semester: semester,
+        year: year
+    }, {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        }
+    }).then((res) => {
+        if(res.status === 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
+export const deleteSubject = async (token, id) => {
+    return await API.delete("/subject/teacher/" + id, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((r) => {
+        if(r.status === 200) {
+            return r.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    })
+}
