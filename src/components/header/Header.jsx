@@ -18,11 +18,10 @@ import {Link, useNavigate} from "react-router-dom";
 import {UserContext} from "../../App";
 
 const Header = () => {
-    const pages = ["Home", "About", "Contact", "Login", "Register"];
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ , , removeCookie ] = useCookies(['access_token']);
     const { user, setUser } = useContext(UserContext);
     const navigate  = useNavigate();
 
@@ -99,7 +98,7 @@ const Header = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {user.role !== null && user.role === "TEACHER" || user.role === "ADMIN" ?
+                            {(user.role !== null && user.role === "TEACHER") || user.role === "ADMIN" ?
                                 <MenuItem onClick={handleCloseNavMenu} component={Link} to="/teacher">
                                     <Typography textAlign="center">Teacher</Typography>
                                 </MenuItem>
@@ -107,7 +106,7 @@ const Header = () => {
                                 <MenuItem />
                             }
                             {
-                                user.role !== null && user.role === "ADMIN" ?
+                                (user.role !== null) && (user.role === "ADMIN") ?
                                     <MenuItem onClick={handleCloseNavMenu} component={Link} to="/admin">
                                         <Typography textAlign="center">Admin</Typography>
                                     </MenuItem>
@@ -136,7 +135,7 @@ const Header = () => {
                         STUDOMAT
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {user.role !== null && user.role === "TEACHER" || user.role === "ADMIN" ?
+                        {((user.role !== null) && (user.role === "TEACHER")) || user.role === "ADMIN" ?
                         <Button
                             onClick={handleCloseNavMenu}
                             component={Link}

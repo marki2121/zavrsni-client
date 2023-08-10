@@ -4,7 +4,7 @@ import {UserContext} from "../../App";
 import {useNavigate} from "react-router-dom";
 
 export const Profile = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { user, } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleUpdate = () => {

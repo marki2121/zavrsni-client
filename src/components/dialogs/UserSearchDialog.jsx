@@ -4,8 +4,8 @@ import {
     Dialog,
     DialogTitle,
     List,
-    ListItem,
     ListItemAvatar,
+    ListItemButton,
     ListItemText,
     TextField,
 } from "@mui/material";
@@ -16,7 +16,7 @@ import {useCookies} from "react-cookie";
 import {addSubjectStudent} from "../../functions/subject/Subject";
 
 const UserSearchDialog = (props) => {
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, , ] = useCookies(['access_token']);
     const { onClose, subject, open } = props;
     const [users, setUsers] = useState([]);
 
@@ -55,8 +55,7 @@ const UserSearchDialog = (props) => {
             <TextField lable="users" sx={{mx: 2}} onChange={(e) => {searchBar(e)}}/>
             <List>
                 {users.map((user) => (
-                    <ListItem
-                        button
+                    <ListItemButton
                         onClick={() => handleListItemClick(user)}
                         key={user.id}
                     >
@@ -64,7 +63,7 @@ const UserSearchDialog = (props) => {
                             <Avatar sx={{ bgcolor: blue[100], color: blue[600] }} src={user.imageUrl} />
                         </ListItemAvatar>
                         <ListItemText primary={user.firstName + " " + user.lastName} />
-                    </ListItem>
+                    </ListItemButton>
                 ))}
             </List>
             <Button variant="contained" sx={{m: 1}} onClick={() => handleClose()}>Close</Button>

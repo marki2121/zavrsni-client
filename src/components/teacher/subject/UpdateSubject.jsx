@@ -34,16 +34,16 @@ const UpdateSubject = () => {
 
     const update = () => {
         updateSubject(cookie.access_token, id, name, description, ects, semester, year)
-            .then((r) => {
+            .then(() => {
                 navigate("/teacher/subject/" + id);
-            }).catch((e) => {
+            }).catch(() => {
         });
     }
 
     const deleteSub = () => {
-        deleteSubject(cookie.access_token, id).then((r) => {
+        deleteSubject(cookie.access_token, id).then(() => {
             navigate("/teacher");
-        }).catch((e) => {
+        }).catch(() => {
         });
     }
 
@@ -53,13 +53,13 @@ const UpdateSubject = () => {
             getSubject( cookie.access_token, id )
                 .then((r) => {
                     setSubject(r);
-                }).catch((e) => {
+                }).catch(() => {
             })
 
             getTests( cookie.access_token, id )
                 .then((r) => {
                     setTests(r);
-                }).catch((e) => {
+                }).catch(() => {
             });
 
             getSubjectStudents( cookie.access_token, id )
@@ -72,7 +72,7 @@ const UpdateSubject = () => {
         }
     });
 
-    const rowStudent = ({index, style}) => {
+    const rowStudent = ({index, }) => {
         return(
             <ListItemButton
                 key={students[index].id}
@@ -85,7 +85,7 @@ const UpdateSubject = () => {
         )
     }
 
-    const rowTest = ({index, style}) => {
+    const rowTest = ({index, }) => {
         return(
             <>
                 <ListItemButton
@@ -154,7 +154,7 @@ const UpdateSubject = () => {
                                         {rowTest}
                                     </FixedSizeList>
                                 }
-                                <Box sx={{my: 2}} justifyContent="center" justifyItems="center" display="flex" sx={{flexDirection: {m: "row"}}}>
+                                <Box justifyContent="center" justifyItems="center" display="flex" sx={{flexDirection: {m: "row"}, my: 2}}>
                                     <Box m={2}>
                                         <Button variant="contained" onClick={() => {update()}}>
                                             Update

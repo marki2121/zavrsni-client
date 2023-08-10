@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 export const UpdateProfile = () => {
     const { user, setUser } = useContext(UserContext);
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, ,  ] = useCookies(['access_token']);
     const navigate = useNavigate();
     const [name, setName] = React.useState('');
     const [surname, setSurname] = React.useState('');
@@ -18,7 +18,6 @@ export const UpdateProfile = () => {
     const [country, setCountry] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [aboutMe, setAboutMe] = React.useState('');
-    const [image, setImage] = React.useState(null);
 
     const callUpdate = async () => {
         const response = await updateSelf(cookie.access_token, name, surname, email, phone, address, city, zipCode, country, aboutMe);
@@ -40,7 +39,7 @@ export const UpdateProfile = () => {
 
     const uploadImage = async (e) => {
         await uploadImages(cookie.access_token, e.target.files[0])
-            .then((response) => {
+            .then(() => {
                 getSelf(cookie.access_token)
                     .then((response) => {
                         setUser(response.data);

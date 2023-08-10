@@ -5,7 +5,7 @@ import {useCookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
 
 const AddSubject = () => {
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, ,  ] = useCookies(['access_token']);
     const navigate = useNavigate();
 
     const [name, setName] = React.useState('');
@@ -15,9 +15,9 @@ const AddSubject = () => {
     const [year, setYear] = React.useState('');
 
     const addSubject = async () => {
-        await addSubjectApi(cookie.access_token, name, description, ects, semester, year).then((response) => {
+        await addSubjectApi(cookie.access_token, name, description, ects, semester, year).then(() => {
             navigate("/teacher")
-        }).catch((error) => {
+        }).catch(() => {
             alert("Error adding subject");
         });
     }

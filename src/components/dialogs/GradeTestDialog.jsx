@@ -16,7 +16,7 @@ import {getAllApplicants, gradeTestApplicant} from "../../functions/test/Test";
 import {useCookies} from "react-cookie";
 
 const GradeTestDialog = (props) => {
-    const {open, test, subject, onClose} = props;
+    const {open, test, onClose} = props;
     const [loading, setLoading] = useState(false);
     const [applicants, setApplicants] = useState([]);
     const [ cookie, ,  ] = useCookies(['access_token']);
@@ -49,7 +49,7 @@ const GradeTestDialog = (props) => {
         })
     }
 
-    const row = ({index, stile}) => {
+    const row = ({index, }) => {
         return(
             <>
                 {applicants[index].id === selecting ?
@@ -89,7 +89,7 @@ const GradeTestDialog = (props) => {
                 console.log(err);
             });
         }
-    }, [open])
+    }, [open, cookie.access_token, test])
 
     return(
         <Dialog open={open}>
