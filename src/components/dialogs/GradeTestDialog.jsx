@@ -14,6 +14,7 @@ import React, {useEffect, useState} from "react";
 import {FixedSizeList} from "react-window";
 import {getAllApplicants, gradeTestApplicant} from "../../functions/test/Test";
 import {useCookies} from "react-cookie";
+import {sleepy} from "../../functions/sleepy";
 
 const GradeTestDialog = (props) => {
     const {open, test, onClose} = props;
@@ -29,10 +30,13 @@ const GradeTestDialog = (props) => {
         onClose();
     }
 
-    const select = (id, index) => {
-        setGraded(applicants[index].testGraded);
-        setArrayIndex(index);
-        setSelecting(id);
+    const select = async (id, index) => {
+        setGraded(null);
+        await sleepy(100).then(() => {
+            setGraded(applicants[index].testGraded);
+            setArrayIndex(index);
+            setSelecting(id);
+        });
     }
 
     const gradeTest = () => {
