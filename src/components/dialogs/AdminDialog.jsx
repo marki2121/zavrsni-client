@@ -61,14 +61,14 @@ const AdminDialog = (props) => {
     }
 
     useEffect(() => {
-        if(userId != undefined) {
+        if(userId !== null) {
             getUserById(cookie.access_token, userId).then((r) => {
                 setUser(r)
             }).catch((e) => {
                 console.log(e)
             })
         }
-    }, [])
+    }, [userId]);
 
     return(
         <Dialog open={open}>
