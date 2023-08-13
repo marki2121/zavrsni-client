@@ -38,8 +38,10 @@ const GradeTestDialog = (props) => {
     const gradeTest = () => {
         setLoading(false);
         gradeTestApplicant(cookie.access_token, selecting, grade).then(() => {
+            setApplicants([]);
             getAllApplicants(cookie.access_token, test).then(res => {
                 setApplicants(res);
+                setGraded(applicants[arrayIndex].testGraded);
                 setLoading(true);
             }).catch(err => {
                 console.log(err);
@@ -70,7 +72,9 @@ const GradeTestDialog = (props) => {
                             key={applicants[index].id}
                             onClick={() => select(applicants[index].id, index)}
                         >
-                            <ListItemAvatar src={applicants[index].imageUrl} sx={{mr: 2}} />
+                            <ListItemAvatar>
+                                <Avatar src={applicants[index].imageUrl} sx={{mr: 2}} />
+                            </ListItemAvatar>
                             <Typography>
                                 {applicants[index].studentName}
                             </Typography>
