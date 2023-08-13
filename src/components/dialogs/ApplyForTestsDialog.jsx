@@ -4,7 +4,7 @@ import {Button, CircularProgress, Dialog, DialogTitle, List, ListItemButton, Lis
 import {applyForTest, getTestsSubject} from "../../functions/test/Test";
 
 const ApplyForTestsDialog = (props) => {
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, , ] = useCookies(['access_token']);
     const { onClose, subject, open } = props;
     const [tests, setTests] = useState([]);
     const [loading, setLoading] = useState(true);

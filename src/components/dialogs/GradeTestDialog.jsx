@@ -55,7 +55,7 @@ const GradeTestDialog = (props) => {
                 {applicants[index].id === selecting ?
                         <ListItemButton
                             key={applicants[index].id}
-                            onClick={() => {select(applicants[index].id); console.log(graded)}}
+                            onClick={() => {select(applicants[index].id)}}
                             selected={true}
                         >
                             <ListItemAvatar>

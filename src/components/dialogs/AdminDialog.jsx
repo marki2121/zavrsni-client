@@ -1,10 +1,10 @@
 import {useCookies} from "react-cookie";
 import {Box, Button, Dialog, DialogTitle, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import {demoteUser, disableUser, enableUser, getUserById, promoteUser} from "../../functions/admin/admin";
+import {deleteUser, demoteUser, disableUser, enableUser, getUserById, promoteUser} from "../../functions/admin/admin";
 
 const AdminDialog = (props) => {
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, ,  ] = useCookies(['access_token']);
     const { onClose, userId, open } = props;
     const [user, setUser] = useState([]);
 
@@ -15,6 +15,7 @@ const AdminDialog = (props) => {
     const enable = () => {
         enableUser(cookie.access_token, userId).then((r) => {
             getUserById(cookie.access_token, userId).then((r) => {
+                setUser({});
                 setUser(r) })
         }).catch((e) => {
             console.log(e)
@@ -24,6 +25,7 @@ const AdminDialog = (props) => {
     const disable = () => {
         disableUser(cookie.access_token, userId).then((r) => {
             getUserById(cookie.access_token, userId).then((r) => {
+                setUser({});
                 setUser(r) })
         }).catch((e) => {
             console.log(e)
@@ -33,6 +35,7 @@ const AdminDialog = (props) => {
     const promote = () => {
         promoteUser(cookie.access_token, userId).then((r) => {
             getUserById(cookie.access_token, userId).then((r) => {
+                setUser({});
                 setUser(r) })
         }).catch((e) => {
             console.log(e)
@@ -42,21 +45,30 @@ const AdminDialog = (props) => {
     const demote = () => {
         demoteUser(cookie.access_token, userId).then((r) => {
             getUserById(cookie.access_token, userId).then((r) => {
+                setUser({});
                 setUser(r) })
         }).catch((e) => {
             console.log(e)
         })
     }
 
+    const deleteU = () => {
+        deleteUser(cookie.access_token, userId).then(() => {
+            Close();
+        }).catch((e) => {
+            console.log(e)
+        });
+    }
+
     useEffect(() => {
-        if(open) {
+        if(userId != undefined) {
             getUserById(cookie.access_token, userId).then((r) => {
                 setUser(r)
             }).catch((e) => {
                 console.log(e)
             })
         }
-    }, [open, userId])
+    }, [])
 
     return(
         <Dialog open={open}>
@@ -91,7 +103,7 @@ const AdminDialog = (props) => {
                         :
                         <Button sx={{mb: 1}} variant="contained" onClick={() => {disable()}}>Disable</Button>
                     }
-                    <Button sx={{mb: 1}} variant="contained" color={"warning"}>Delete</Button>
+                    <Button sx={{mb: 1}} variant="contained" color={"warning"} onClick={() => {deleteU()}}>Delete</Button>
                 </Box>
             </Box>
             <Button variant="contained" sx={{m: 2}} onClick={() => {Close()}}>

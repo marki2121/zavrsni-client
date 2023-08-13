@@ -6,7 +6,7 @@ import SubjectCard from "../teacher/subject/SubjectCard";
 import {getUserSubjects} from "../../functions/subject/Subject";
 
 const Home = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { user, } = useContext(UserContext);
     const [ cookie, , ] = useCookies(['access_token']);
     const [ subjects, setSubjects ] = useState([]);
     const [ loading, setLoading ] = useState(true);

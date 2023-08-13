@@ -19,6 +19,7 @@ import {blue} from "@mui/material/colors";
 import CreateTestDialog from "../../dialogs/CreateTestDialog";
 import {getTests} from "../../../functions/test/Test";
 import GradeTestDialog from "../../dialogs/GradeTestDialog";
+import {sleepy} from "../../../functions/sleepy";
 
 const Subject = () => {
     const {id} = useParams();
@@ -50,20 +51,28 @@ const Subject = () => {
         setOpenTestGrading(false);
     }
 
-    const handleCloseUsers = (value) => {
+    const handleCloseUsers = async (value) => {
+        setLoading(true);
+        await sleepy(100);
+        setStudents([]);
         getSubjectStudents( cookie.access_token, id)
             .then((r) => {
                 setStudents(r);
                 setOpenUsers(false);
+                setLoading(false);
             }).catch((e) => {
         });
     };
 
-    const handleCloseTests = (value) => {
+    const handleCloseTests = async (value) => {
+        setLoading(true);
+        await sleepy(100);
+        setTests([]);
         getTests( cookie.access_token, id)
             .then((r) => {
                 setTests(r);
                 setOpenTests(false);
+                setLoading(false);
             }).catch((e) => {
             });
     };

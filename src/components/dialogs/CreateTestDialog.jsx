@@ -4,7 +4,7 @@ import {useCookies} from "react-cookie";
 import {addTest} from "../../functions/test/Test";
 
 const CreateTestDialog = (props) => {
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, ,  ] = useCookies(['access_token']);
     const { onClose, subject, open } = props;
     const [date, setDate] = useState(null);
     const [note, setNote] = useState(null);

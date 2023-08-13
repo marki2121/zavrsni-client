@@ -1,18 +1,8 @@
 import {useCookies} from "react-cookie";
-import {
-    Avatar,
-    Box,
-    Card,
-    CircularProgress,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemText,
-    Typography
-} from "@mui/material";
+import {Box, Card, CircularProgress, ListItemButton, ListItemText, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {getAllUser} from "../../functions/admin/admin";
 import {FixedSizeList} from "react-window";
-import {blue} from "@mui/material/colors";
 import AdminDialog from "../dialogs/AdminDialog";
 
 const AdminPanel = () => {
@@ -23,7 +13,6 @@ const AdminPanel = () => {
     const [user, setUser] = useState(null);
 
     const handleOpen = () => {
-        console.log(open);
         setOpen(true);
     }
 

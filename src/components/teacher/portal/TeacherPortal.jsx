@@ -1,5 +1,4 @@
-import {UserContext} from "../../../App";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Box, Button, Card, CircularProgress, Grid, Typography} from "@mui/material";
 import {useCookies} from "react-cookie";
 import {getAllSubjects} from "../../../functions/subject/Subject";
@@ -7,8 +6,7 @@ import {Link} from "react-router-dom";
 import SubjectCard from "../subject/SubjectCard";
 
 const TeacherPortal = () => {
-    const {user, setUser} = useContext(UserContext);
-    const [ cookie, setCookie, removeCookie ] = useCookies(['access_token']);
+    const [ cookie, ,  ] = useCookies(['access_token']);
     const [ subjects, setSubjects ] = useState([]);
 
     const [ loading, setLoading ] = useState(true);
@@ -17,19 +15,17 @@ const TeacherPortal = () => {
 
         if (cookie.access_token && loading) {
             getAllSubjects(cookie.access_token).then((r) => {
-                    {
                         if(r.status !== 200) {
                             setSubjects(r);
-                            console.log(subjects);
                             setLoading(false);
                         } else {
                             setSubjects(null);
                         }
-            }}).catch((e) => {
+            }).catch((e) => {
                 console.log(e);
             });
         }
-    }, []);
+    });
 
     return (
         <>

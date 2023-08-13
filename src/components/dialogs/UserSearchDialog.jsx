@@ -21,9 +21,10 @@ const UserSearchDialog = (props) => {
     const [users, setUsers] = useState([]);
 
     const handleListItemClick = (value) => {
-        addUser(value).then(() => {
+        addUser(value)
+            .then(() => {
             onClose(value);
-        });
+            });
     };
 
     const handleClose = () => {
@@ -38,14 +39,11 @@ const UserSearchDialog = (props) => {
 
             if(res.status === 200) {
                 setUsers(res.data)
-            } else {
-                console.log(res.data);
             }
         }
     }
 
     const addUser = async (user) => {
-        console.log(user);
         addSubjectStudent( cookie.access_token, subject, user.id);
     }
 

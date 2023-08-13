@@ -17,10 +17,8 @@ const MySubject = () => {
     const [testId, setTestId] = useState(null);
     const [openCancleTest, setOpenCancleTest] = React.useState(false);
     const [tests, setTests] = useState([]);
-    const [ind, setInd] = useState(null);
 
     const handleClickOpenTest = ( index ) => {
-        setInd(index);
         setOpenTests(true);
     };
 
@@ -64,7 +62,7 @@ const MySubject = () => {
                 });
             })
         }
-    }, []);
+    });
 
     const rowTest = ({index, style}) => {
         return(

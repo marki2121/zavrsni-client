@@ -20,21 +20,20 @@ export const UpdateProfile = () => {
     const [aboutMe, setAboutMe] = React.useState('');
 
     const callUpdate = async () => {
-        const response = await updateSelf(cookie.access_token, name, surname, email, phone, address, city, zipCode, country, aboutMe);
-
-        if (response.status === 202) {
-            await getSelf(cookie.access_token)
-                .then((response) => {
-                    setUser(response.data);
-
-                    navigate('/profile');
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } else {
-            console.log(response);
-        }
+        await updateSelf(cookie.access_token, name, surname, email, phone, address, city, zipCode, country, aboutMe)
+            .then((r) => {
+                getSelf(cookie.access_token)
+                    .then((response) => {
+                        setUser({});
+                        setUser(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                navigate('/profile');
+            }).catch((e) => {
+                console.log(e);
+            })
     };
 
     const uploadImage = async (e) => {
@@ -42,6 +41,7 @@ export const UpdateProfile = () => {
             .then(() => {
                 getSelf(cookie.access_token)
                     .then((response) => {
+                        setUser({});
                         setUser(response.data);
 
                         navigate('/profile');

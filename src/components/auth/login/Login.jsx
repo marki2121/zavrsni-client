@@ -9,7 +9,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [cookies, setCookies] = useCookies(['access_token']);
+    const [, setCookies] = useCookies(['access_token']);
 
     const callLogin = async () => {
         const response = await login(username, password);
