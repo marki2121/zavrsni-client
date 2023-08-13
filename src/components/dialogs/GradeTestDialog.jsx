@@ -41,7 +41,8 @@ const GradeTestDialog = (props) => {
             setApplicants([]);
             getAllApplicants(cookie.access_token, test).then(res => {
                 setApplicants(res);
-                setGraded(applicants[arrayIndex].testGraded);
+                setGraded(true);
+            }).then(() => {
                 setLoading(true);
             }).catch(err => {
                 console.log(err);
@@ -119,26 +120,32 @@ const GradeTestDialog = (props) => {
                 <Box m={2} sx={{display: 'flex', flexDirection: "column"}}>
                     {graded ?
                         <>
-                            <Typography>
-                                Already graded
-                            </Typography>
-                            <TextField
-                                label="Grade"
-                                variant="outlined"
-                                type="number"
-                                InputProps={{
-                                    inputProps: {
-                                        min: 0,
-                                        max: 100
-                                    }
-                                }}
-                                value={applicants[arrayIndex].grade}
-                                sx={{margin: 2}}
-                                onChange={(e) => setGrade(e.target.value)}
-                            />
-                            <Button variant="contained" sx={{margin: 2}} onClick={() => {gradeTest()}}>
-                                Update
-                            </Button>
+                            {!applicants[arrayIndex] ?
+                                <CircularProgress />
+                                :
+                                <>
+                                    <Typography>
+                                        Already graded
+                                    </Typography>
+                                    <TextField
+                                        label="Grade"
+                                        variant="outlined"
+                                        type="number"
+                                        InputProps={{
+                                            inputProps: {
+                                                min: 0,
+                                                max: 100
+                                            }
+                                        }}
+                                        defaultValue={applicants[arrayIndex].grade}
+                                        sx={{margin: 2}}
+                                        onChange={(e) => setGrade(e.target.value)}
+                                    />
+                                    <Button variant="contained" sx={{margin: 2}} onClick={() => {gradeTest()}}>
+                                        Update
+                                    </Button>
+                                </>
+                            }
                         </>
                     :
                         <>
