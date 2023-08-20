@@ -10,11 +10,13 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [, setCookies] = useCookies(['access_token']);
+    const [message, setMessage] = useState("");
 
     const callLogin = async () => {
         const response = await login(username, password);
 
         if(response.status === 200) {
+            setMessage("");
             setCookies(
                 "access_token",
                 response.data,
@@ -22,7 +24,7 @@ const Login = () => {
 
             navigate("/")
         } else {
-            console.log(response.status);
+            setMessage("Login failed.");
         }
     }
 
@@ -36,6 +38,7 @@ const Login = () => {
                     <TextField type="password" label="password" onChange={(e) => {setPassword(e.target.value)}}/>
                 </Grid>
                 <Grid item margin={2} textAlign="center">
+                    <Typography color={"red"} mb={1}>{ message }</Typography>
                     <Button variant="contained" onClick={() => {callLogin()}}>
                         Login  <LoginRounded />
                     </Button>

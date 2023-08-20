@@ -11,8 +11,8 @@ export const login =  async (username, password) => {
 }
 
 export const register = async (username, password, passwordConfirmation) => {
-    try {
-        const response = await API.post("/auth/signup", {
+
+        return await API.post("/auth/signup", {
             username,
             password,
             passwordConfirmation
@@ -20,9 +20,6 @@ export const register = async (username, password, passwordConfirmation) => {
             headers: {
                 "Content-Type": "application/json"
             }
-        });
-        return await response;
-    } catch (error) {
-        return error;
-    }
+        }).then((r) => r
+        );
 }

@@ -9,13 +9,16 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
+    const [message, setMessage] = useState("");
 
     const callSignup = async () => {
-        const response = await register(username, password, confirmPassword);
-
-        if(response.status === 200) {
-            navigate("/auth/login/");
-        };
+        await register(username, password, confirmPassword).then((r) => {
+            if(r.status === 200) {
+                navigate("/auth/login/");
+            } else if(r.status === 400) {
+                setMessage(r.data.message);
+            }
+        });
     };
 
     return (
@@ -31,6 +34,7 @@ const Signup = () => {
                     <TextField type="password" label="confirm password" onChange={(e) => {setConfirmPassword(e.target.value)}}/>
                 </Grid>
                 <Grid item margin={2} textAlign="center">
+                    <Typography color={"red"} mb={1}>{ message }</Typography>
                     <Button variant="contained" onClick={() => {callSignup()}}>
                         Register  <AppRegistrationRounded />
                     </Button>
